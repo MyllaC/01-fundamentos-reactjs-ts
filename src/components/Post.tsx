@@ -1,9 +1,11 @@
 import { format, formatDistanceToNow } from 'date-fns'
 import ptBR from 'date-fns/locale/pt-BR'
-import styles from './Post.module.css'
-import { Comment } from './Comment'
-import { Avatar } from './Avatar'
 import { ChangeEvent, FormEvent, InvalidEvent, useState } from 'react'
+
+import { Avatar } from './Avatar'
+import { Comment } from './Comment'
+
+import styles from './Post.module.css'
 
 interface Author {
   name: string
@@ -14,12 +16,6 @@ interface Author {
 interface Content {
   type: 'paragraph' | 'link'
   content: string
-}
-
-interface PostProps {
-  author: Author
-  publishedAt: Date
-  content: Content[]
 }
 
 export interface PostType {
@@ -81,16 +77,13 @@ export function Post({ post }: PostProps) {
     <article className={styles.post}>
       <header>
         <div className={styles.author}>
-          <Avatar
-            hasBorder={false}
-            src="https://github.com/diego3g.png"
-            alt=""
-          />
+          <Avatar src={post.author.avatarUrl} />
           <div className={styles.authorInfo}>
             <strong>{post.author.name}</strong>
             <span>{post.author.role}</span>
           </div>
         </div>
+
         <time
           title={publishedDateFormatted}
           dateTime={post.publishedAt.toISOString()}
@@ -126,7 +119,7 @@ export function Post({ post }: PostProps) {
         />
 
         <footer>
-          <button disabled={isNewCommentEmpty} type="submit">
+          <button type="submit" disabled={isNewCommentEmpty}>
             Publicar
           </button>
         </footer>
